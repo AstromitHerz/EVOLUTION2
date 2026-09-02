@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EVOLUTION II · Astro mit Herz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.cdnfonts.com/css/glacial-indifference" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0b134b;
+    --gold:#bc7404;
+    --gold-soft:#e0a83a;
+    --turq:#13b4cf;
+    --turq-bright:#16c9e8;
+    --turq-light:#8fe0ec;
+    --turq-deep:#0a8299;
+    --white:#fdfcf9;
+    --cream:#f5ecda;
+    --sand:#ece0c6;
+    --tint:#e9f6fa;
+    --ink:#1b2140;
+    --maxw:1100px;
+
+    --fs-tag:.92rem;
+    --fs-small:.95rem;
+    --fs-lead:1.15rem;
+    --fs-heading:clamp(1.9rem,4.2vw,2.8rem);
+    --fs-h1:clamp(2.2rem,5.6vw,3.8rem);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:"Glacial Indifference",-apple-system,Segoe UI,sans-serif;color:var(--navy);background:var(--white);font-size:20px;line-height:1.68;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  .narrow{max-width:720px}
+
+  h1,h2,h3{font-weight:700;line-height:1.12;letter-spacing:.01em}
+  h1{font-size:var(--fs-h1)}
+  h2{font-size:var(--fs-heading)}
+  .eyebrow{font-size:var(--fs-small);letter-spacing:.28em;padding-left:.28em;text-transform:uppercase;color:var(--turq-deep);font-weight:700;margin-bottom:18px;max-width:none}
+  .bg-cosmic .eyebrow{color:var(--turq-light)}
+  .lead{font-size:var(--fs-lead)}
+  p{max-width:64ch}
+  .script{font-family:"Pinyon Script",cursive;font-weight:400}
+  .mark{background:linear-gradient(transparent 56%, var(--turq-light) 56%, var(--turq-light) 94%, transparent 94%);padding:0 .12em}
+
+  section{padding:clamp(72px,10vw,132px) 0}
+  .bg-cream{background:var(--cream)}
+  .bg-sand{background:var(--sand)}
+  .bg-tint{background:var(--tint)}
+  .bg-cosmic{color:#fff;background:
+    radial-gradient(1.5px 1.5px at 12% 22%, #fff, transparent),
+    radial-gradient(1px 1px at 28% 68%, #cfe8ff, transparent),
+    radial-gradient(1.5px 1.5px at 46% 30%, #fff, transparent),
+    radial-gradient(1px 1px at 63% 74%, #fff, transparent),
+    radial-gradient(1.5px 1.5px at 79% 38%, #bff0f7, transparent),
+    radial-gradient(1px 1px at 88% 64%, #fff, transparent),
+    radial-gradient(1px 1px at 35% 86%, #fff, transparent),
+    radial-gradient(1.5px 1.5px at 70% 14%, #fff, transparent),
+    linear-gradient(140deg,#0b134b 0%,#1c2470 42%,#0a6f8c 100%)}
+  .bg-cosmic p{color:rgba(255,255,255,.88)}
+
+  .btn{display:inline-block;background:var(--turq-bright);color:#fff;font-weight:700;letter-spacing:.04em;text-decoration:none;padding:16px 36px;border-radius:40px;font-size:1rem;box-shadow:0 8px 26px rgba(25,200,232,.4);transition:transform .15s ease, box-shadow .2s ease}
+  .btn:hover{transform:translateY(-2px);box-shadow:0 12px 34px rgba(25,200,232,.55)}
+  .btn-note{display:block;margin-top:12px;font-size:var(--fs-small);opacity:.72}
+
+  /* HEADER */
+  .site-header{position:sticky;top:0;z-index:60;background:rgba(253,252,249,.86);backdrop-filter:blur(12px);border-bottom:1px solid rgba(11,19,75,.08)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:116px}
+  .brand{display:flex;align-items:center;text-decoration:none;color:var(--navy)}
+  .brand-mark{height:88px;width:auto;display:block;image-rendering:-webkit-optimize-contrast}
+  .nav-cta{padding:10px 22px;font-size:var(--fs-small)}
+
+  /* Bild-Akzente */
+  .accent-bg{position:relative;overflow:hidden}
+  .accent-bg::before{content:"";position:absolute;inset:0;background-image:var(--accent-img);background-size:cover;background-position:center;opacity:var(--accent-op,.14);mix-blend-mode:var(--accent-blend,normal);pointer-events:none}
+  .accent-bg>.wrap{position:relative;z-index:1}
+  .planet-img{width:118px;height:118px;border-radius:50%;overflow:hidden;margin-top:20px;box-shadow:0 10px 26px rgba(11,19,75,.18)}
+  .planet-img img{width:100%;height:100%;object-fit:cover;display:block}
+  .titelbild{width:100%;overflow:hidden;line-height:0;height:clamp(280px,40vw,480px)}
+  .titelbild img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
+  .spiral-strip{width:100%;margin:0 0 44px}
+  .spiral-strip img{width:100%;height:auto;display:block}
+  .round-accent{border-radius:50%;overflow:hidden;box-shadow:0 14px 34px rgba(11,19,75,.2);margin:0 auto}
+  .round-accent img{width:100%;height:100%;object-fit:cover;display:block}
+
+  /* Für wen */
+  .fit-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,48px);margin-top:20px}
+  .fit-card{background:#fff;border-radius:20px;padding:clamp(28px,4vw,40px);box-shadow:0 12px 30px rgba(11,19,75,.08)}
+  .fit-card h3{font-size:var(--fs-lead);margin-bottom:18px;line-height:1.3}
+  .fit-card ul{list-style:none}
+  .fit-card li{padding:10px 0 10px 30px;position:relative}
+  .fit-yes li::before{content:"✓";position:absolute;left:0;color:var(--turq-deep);font-weight:700}
+  .fit-no li::before{content:"×";position:absolute;left:0;color:rgba(11,19,75,.5);font-weight:700}
+  @media(max-width:760px){.fit-grid{grid-template-columns:1fr}}
+
+  /* Szenen */
+  .scene-list{display:flex;flex-direction:column;gap:18px}
+  .scene-card{background:var(--tint);border-radius:16px;padding:clamp(22px,3vw,28px) clamp(22px,4vw,32px)}
+  .scene-card p{margin-bottom:14px;font-size:var(--fs-lead)}
+  .scene-tag{display:inline-block;color:#fff;font-weight:700;font-size:var(--fs-tag);letter-spacing:.06em;padding:6px 14px;border-radius:20px}
+
+  /* HERO */
+  .hero{text-align:center;position:relative;overflow:hidden}
+  .slogan-script{font-family:"Pinyon Script",cursive;font-size:var(--fs-heading);color:var(--turq-deep);line-height:1.05;margin-bottom:22px}
+  .hero h1{max-width:19ch;margin:0 auto 22px}
+  .hero .lead{max-width:56ch;margin:0 auto 34px}
+
+  .micro-lines .line{font-size:var(--fs-heading);font-weight:700;margin:8px 0;text-align:center}
+
+  /* Planeten */
+  .planet{border-top:1px solid rgba(11,19,75,.14);padding:clamp(38px,5vw,58px) 0;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr);gap:clamp(24px,5vw,64px);align-items:start}
+  .planet:last-child{border-bottom:1px solid rgba(11,19,75,.14)}
+  .planet-name{font-size:var(--fs-heading);font-weight:700;line-height:1}
+  .planet-sub{font-size:var(--fs-tag);letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-top:10px;font-weight:700}
+  .planet-scene{font-size:var(--fs-lead);font-style:italic;line-height:1.4;margin-bottom:26px;color:var(--ink)}
+  .level{display:flex;gap:14px;margin-bottom:16px}
+  .level-tag{flex:0 0 auto;font-size:var(--fs-tag);letter-spacing:.06em;text-transform:uppercase;font-weight:700;color:#fff;background:var(--navy);border-radius:20px;padding:5px 12px;height:fit-content;margin-top:3px;white-space:nowrap}
+  .level:nth-child(2) .level-tag{background:var(--gold)}
+  .level:nth-child(3) .level-tag{background:var(--gold-soft)}
+  .level p{margin:0}
+  .planet-nutzen{margin-top:22px;padding:16px 20px;background:var(--tint);border-left:3px solid var(--turq);border-radius:0 10px 10px 0}
+  .planet-nutzen strong{display:block;color:var(--turq-deep);text-transform:uppercase;font-size:var(--fs-tag);letter-spacing:.12em;margin-bottom:5px}
+  .planet-regelt{margin-top:16px;font-size:var(--fs-small);opacity:.72}
+
+  /* Ablauf */
+  .flow{max-width:820px;margin:0 auto}
+  .flow li{list-style:none;padding:22px 0 22px 42px;position:relative;border-bottom:1px solid rgba(11,19,75,.12);font-size:var(--fs-lead)}
+  .flow li::before{content:"";position:absolute;left:6px;top:29px;width:13px;height:13px;border-radius:50%;background:linear-gradient(135deg,var(--turq-bright),var(--turq-deep))}
+  .flow strong{display:block;margin-bottom:2px}
+
+  /* Kalender */
+  .calendar{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin:44px auto 0;max-width:1080px}
+  .cal-card{background:#fff;border-radius:16px;padding:20px 14px;text-align:center;box-shadow:0 10px 26px rgba(11,19,75,.08);border-top:4px solid var(--turq)}
+  .cal-card .month{font-size:var(--fs-tag);letter-spacing:.12em;text-transform:uppercase;color:var(--gold);font-weight:700}
+  .cal-card .planet{border:none;padding:8px 0 2px;grid-template-columns:1fr;display:block}
+  .cal-card .pname{font-size:var(--fs-lead);font-weight:700;margin-top:4px}
+  .cal-card .ptheme{font-size:var(--fs-small);opacity:.7;margin-top:4px}
+  @media(max-width:900px){.calendar{grid-template-columns:repeat(3,1fr)}}
+  @media(max-width:760px){.calendar{grid-template-columns:repeat(2,1fr)}}
+
+  /* Preis */
+  .price-card{position:relative;background:#fff;border-radius:24px;padding:clamp(34px,5vw,58px);max-width:640px;margin:0 auto;box-shadow:0 26px 64px rgba(11,19,75,.18);text-align:center;border-top:5px solid transparent;background-clip:padding-box}
+  .price-card::before{content:"";position:absolute;inset:0 0 auto 0;height:6px;border-radius:24px 24px 0 0;background:linear-gradient(90deg,var(--turq-bright),var(--gold-soft))}
+  .price-tag{font-size:var(--fs-heading);font-weight:700;margin:10px 0 2px}
+  .price-rates{opacity:.75}
+  .price-card ul{list-style:none;text-align:left;max-width:440px;margin:26px auto 0}
+  .price-card li{padding:12px 0 12px 34px;position:relative;border-bottom:1px solid rgba(11,19,75,.1)}
+  .price-card li::before{content:"✦";position:absolute;left:0;color:var(--turq-deep);top:12px}
+  .price-after{margin:30px auto 0;max-width:52ch;opacity:.85;font-size:var(--fs-small)}
+
+  /* Über mich */
+  .about-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:clamp(30px,6vw,64px);align-items:center}
+  .portrait{aspect-ratio:4/5;border-radius:20px;box-shadow:0 20px 50px rgba(11,19,75,.18);background-image:linear-gradient(140deg,rgba(224,168,58,.22),rgba(188,116,4,.12)),url('images/portrait.jpg'),linear-gradient(140deg,#12204f,#0a6f8c);background-size:cover,150% auto,cover;background-position:center,center 8%,center}
+  .about h2{margin-bottom:18px}
+  .about p{margin-bottom:16px}
+
+  /* Stimmen */
+  .quotes{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(18px,3vw,28px)}
+  .quote{background:#fff;border-radius:18px;padding:28px;box-shadow:0 12px 30px rgba(11,19,75,.1);border-top:3px solid var(--turq)}
+  .quote p{font-style:italic;margin-bottom:0}
+
+  /* FAQ */
+  .faq details{border-bottom:1px solid rgba(11,19,75,.18);padding:6px 0}
+  .faq summary{cursor:pointer;list-style:none;padding:20px 40px 20px 0;position:relative;font-size:var(--fs-lead);font-weight:700}
+  .faq summary::-webkit-details-marker{display:none}
+  .faq summary::after{content:"+";position:absolute;right:4px;top:16px;font-size:1.6rem;color:var(--turq-deep);transition:transform .2s}
+  .faq details[open] summary::after{transform:rotate(45deg)}
+  .faq details p{padding:0 0 22px;margin:0}
+
+  .final h2{max-width:22ch;margin:0 auto 28px}
+  .final .lead{color:rgba(255,255,255,.9)}
+
+  footer{background:#1c2470;color:var(--cream);text-align:center;padding:52px 24px}
+  footer .logo{font-family:"Glacial Indifference",sans-serif;font-weight:700;letter-spacing:.14em;font-size:1.2rem;color:#fff}
+  footer small{display:block;margin-top:10px;opacity:.6;letter-spacing:.1em}
+  .footer-legal{margin-top:22px;display:flex;justify-content:center;gap:20px;flex-wrap:wrap}
+  .footer-legal a{color:var(--cream);opacity:.55;text-decoration:none;font-size:var(--fs-tag);letter-spacing:.04em}
+  .footer-legal a:hover{opacity:.9}
+
+  @media(max-width:760px){
+    .about-grid{grid-template-columns:1fr;gap:28px}
+    .quotes{grid-template-columns:1fr}
+    .planet{grid-template-columns:1fr;gap:16px}
+    .planet-head{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+    .planet-img{width:74px;height:74px;margin-top:0}
+    .portrait{width:100%;max-width:340px;margin:0 auto}
+    .calendar{grid-template-columns:1fr 1fr}
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="site-header">
+  <div class="wrap nav">
+    <a class="brand" href="#top">
+      <img class="brand-mark" src="images/logo-transparent.png" alt="Astro mit Herz – by Pia Tietz">
+    </a>
+    <a href="#preis" class="btn nav-cta">Zur Anmeldung</a>
+  </div>
+</header>
+
+<!-- ===== TITELBILD ===== -->
+<div class="titelbild">
+  <img src="images/titelbild-meer.jpg" alt="EVOLUTION II – of the planets">
+</div>
+
+<!-- ===== HERO ===== -->
+<section class="hero bg-cream" id="top">
+  <div class="wrap">
+    <p class="slogan-script">Dich entdecken. Das Universum entdecken.</p>
+    <h1>Du kennst deine Persönlichkeit.<br><span class="mark">Jetzt triffst du,<br>was größer ist als du.</span></h1>
+    <p class="lead">Für alle, die sich selbst schon gut kennen und bereit sind für die nächste Tiefe. Von Oktober bis März gehst du durch fünf Kräfte, die über deine Persönlichkeit hinausgehen: Wandel, Sinn, Reife, Freiheit und Verschmelzung. Eine Gruppe, ein gemeinsamer Weg, mit einer stillen Winterzeit zum Einkehren.</p>
+    <a href="#preis" class="btn">EVOLUTION II – zur Anmeldung</a>
+    <span class="btn-note">Start im Oktober. Ich öffne nur 6 Plätze, für eine wirklich persönliche Atmosphäre.</span>
+  </div>
+</section>
+
+<!-- ===== INTRO ===== -->
+<section class="bg-white">
+  <div class="wrap narrow">
+    <p class="eyebrow">Kennst du das?</p>
+    <p class="lead" style="margin-bottom:22px">Astrologie bleibt im Kopf. Du kennst die Deutungen, vielleicht ahnst du sie schon, bevor du nachliest. Aber im Körper, im Alltag, in echten Entscheidungen kommt davon oft wenig an.</p>
+    <p style="margin-bottom:22px">Du brauchst nicht das nächste Reading, um mehr zu verstehen. Du weißt genug. Was du brauchst, ist die Verkörperung, damit dein kosmischer Bauplan konkret in deinem Leben sichtbar wird. Dafür steht EVOLUTION.</p>
+    <p style="margin-bottom:48px">Bei EVOLUTION II sind es die Kräfte, die größer sind als du allein: Wandel, Sinn, Reife, Freiheit, Verschmelzung. Auch die zeigen sich in deinem Alltag, ganz praktisch. Du kommst in deine Kraft, lernst dich tiefer kennen, lieben und verstehen, beendest die inneren Kämpfe und bist einverstanden mit dem, was größer ist als du.</p>
+    <h2 style="text-align:center;margin-bottom:36px">5 universelle Lebenskräfte</h2>
+    <div class="scene-list">
+      <div class="scene-card">
+        <p>Du hinterfragst alles, schaust in die Tiefe und willst an den Kern, an die Wurzel von allem. Dein Motto lautet: Was steckt dahinter?</p>
+        <span class="scene-tag" style="background:var(--turq)">Das ist PLUTO in deinem Chart</span>
+      </div>
+      <div class="scene-card">
+        <p>Es gibt etwas, das dir ganz leicht fällt. Du musst dich nicht anstrengen, es ist dein natürliches Talent. Und hier strebst du immer nach neuen Ufern, nach neuen Erkenntnissen.</p>
+        <span class="scene-tag" style="background:var(--gold)">Das ist JUPITER in deinem Horoskop</span>
+      </div>
+      <div class="scene-card">
+        <p>Du hältst durch, wenn andere längst aufgegeben haben. Du übernimmst Verantwortung, auch wenn's unbequem wird. Dein Motto lautet: richtig, oder gar nicht.</p>
+        <span class="scene-tag" style="background:var(--navy)">Das ist SATURN in deinem Chart</span>
+      </div>
+      <div class="scene-card">
+        <p>Du eckst an, wo andere sich anpassen. Du spürst sofort, wenn etwas nicht zu dir passt, auch wenn du es noch nicht aussprichst. Dein Motto lautet: Ich bin, wie ich bin.</p>
+        <span class="scene-tag" style="background:var(--turq-bright)">Das ist URANUS in deinem Chart</span>
+      </div>
+      <div class="scene-card">
+        <p>Du spürst, was andere fühlen, bevor sie es aussprechen. Stimmungen liest du wie andere Bücher. Dein Motto lautet: Ich fühle es einfach.</p>
+        <span class="scene-tag" style="background:var(--turq-deep)">Das ist NEPTUN in deinem Horoskop</span>
+      </div>
+    </div>
+    <p style="max-width:64ch;margin:36px auto 0;font-size:var(--fs-lead)">Diese Kräfte wirken in jedem von uns, aber unterschiedlich stark ausgeprägt, unterschiedlich gewichtet. Manche begegnen dir stärker in deinem eigenen Leben, andere weniger stark, manchmal auch nur phasenweise, durch Transite. Aber dein Horoskop ist rund, und jede Energie möchte gelebt werden. Das ist ein Grundsatz der Astrologie.</p>
+  </div>
+</section>
+
+<!-- ===== MAKRO / MIKRO ===== -->
+<section class="bg-tint" style="text-align:center;padding-top:0">
+  <div class="wrap" style="padding-top:clamp(56px,9vw,96px)">
+    <p class="slogan-script">Astrologie ist kosmische Psychologie.<br>(Gertrud I. Hürlimann)</p>
+  </div>
+  <div class="spiral-strip" style="margin-top:8px"><img src="images/spiralen-strecke.jpg" alt="Spiralen in der Natur: Schnecke, Farn, Sand, Widderhorn, Auge, Fingerabdruck"></div>
+  <div class="wrap" style="padding-top:clamp(72px,10vw,132px)">
+    <p class="eyebrow">Geerdete Astrologie</p>
+    <div class="micro-lines">
+      <p class="line">wie oben, so unten</p>
+      <p class="line">wie innen, so außen</p>
+      <p class="line"><span class="mark">wie das Universum, so die Seele</span></p>
+    </div>
+    <p style="max-width:54ch;margin:32px auto 48px;font-size:var(--fs-lead)">Der Kosmos spiegelt sich in dir, und du spiegelst dich im Kosmos. Bei EVOLUTION II gehst du einen Schritt weiter: von dir hinein in das, was größer ist als du.</p>
+    <p class="slogan-script">„Nichts ist, alles wird." (Heraklit)</p>
+    <p style="max-width:60ch;margin:0 auto 26px;font-size:var(--fs-lead)">Leben ist kein fester Zustand, sondern ein lebendiges Werden, eine fortwährende Entfaltung.</p>
+    <p style="margin:0 auto 10px;font-size:var(--fs-lead)">Astrologie ist so viel mehr als die „fancy" Sprache des Kosmos.</p>
+    <p style="margin:0 auto 10px;font-size:var(--fs-lead)">Mehr als ein Konzept aus Himmelskörperbewegungen.</p>
+    <p style="margin:0 auto;font-size:var(--fs-lead)">Mehr als 12 Schubladen mit nettem Etikett.</p>
+  </div>
+</section>
+
+<!-- ===== DIE IDEE ===== -->
+<section class="bg-cosmic accent-bg" id="idee" style="--accent-img:url('images/idee-fractal.jpg');--accent-op:.16;--accent-blend:screen">
+  <div class="wrap narrow" style="margin:0 auto;text-align:center">
+    <p class="eyebrow">Die Idee dahinter</p>
+    <h2>Evolution I ging in die Tiefe.<br>Evolution II geht in die Weite.</h2>
+    <p style="margin:0 auto 18px">Bei den fünf persönlichen Planeten ging es um dich: wie du handelst, liebst, denkst, fühlst und strahlst. Jetzt kommen die Kräfte dazu, die über deine Persönlichkeit hinausgehen. Sie verbinden dich mit deiner Generation, mit deinem überpersönlichen Auftrag, mit allem, was größer ist als du allein.</p>
+    <p style="margin:0 auto">Schritt für Schritt gehst du weiter nach außen: durch Wandel, Sinn, Reife, Freiheit und Verschmelzung, mit einer ruhigen Winterpause zur Integration.</p>
+  </div>
+</section>
+
+<!-- ===== ZWISCHEN ===== -->
+<section class="bg-cream" style="padding:44px 0;text-align:center">
+  <p class="slogan-script" style="margin:0">Dem Leben begegnen.</p>
+</section>
+
+<!-- ===== PLANETEN ===== -->
+<section class="bg-white" id="planeten">
+  <div class="wrap">
+    <div style="max-width:640px;margin-bottom:20px">
+      <p class="eyebrow">Die fünf Kräfte</p>
+      <h2>Was größer ist als deine Persönlichkeit</h2>
+      <p style="margin-top:16px">Fünf große Lebensthemen. Wir widmen uns ihnen einem nach dem anderen, auch wenn sie sich in deinem eigenen Leben oft erst durch Transite oder einschneidende Momente zeigen, nicht auf Bestellung. Jedes auf drei Ebenen: wie es sich im Verborgenen hält, wie es sich zeigt, wenn die Zeit reif ist, und wie du lernst, liebevoll damit zu üben.</p>
+    </div>
+
+    <div class="planet">
+      <div class="planet-head"><div class="planet-name">PLUTO</div><div class="planet-sub">Oktober · der Wandel, der zum Leben gehört</div><div class="planet-img"><img src="images/pluto-cave.jpg" alt=""></div></div>
+      <div>
+        <p class="planet-scene">„Etwas in deinem Leben ist eigentlich schon vorbei. Nur du hältst es noch fest."</p>
+        <div class="level"><span class="level-tag">Im Verborgenen</span><p>Manches bleibt lieber im Dunkeln. Du weichst aus, wo es zu tief, zu roh, zu unbequem wird, ganz automatisch, nicht aus Schwäche.</p></div>
+        <div class="level"><span class="level-tag">Wenn es sich zeigt</span><p>Meist ist es nicht dein Plan, der dich dorthin bringt. Eine Krise, ein Verlust, ein Transit, plötzlich steht das Thema mitten in deinem Leben, ungefragt.</p></div>
+        <div class="level"><span class="level-tag">In liebevoller Übung</span><p>Du lernst, dich diesen Wellen nicht entgegenzustellen. Mit jedem Mal ein bisschen sanfter, ein bisschen vertrauter, du gehst mit, statt zu kämpfen.</p></div>
+        <div class="planet-nutzen"><strong>So lebst du das</strong>Wenn Pluto sich meldet, leise oder mit voller Wucht, weißt du: Es ist kein Zufall. Du begegnest dir selbst, immer wieder ein Stück tiefer, und bleibst dabei zärtlich mit dir.</div>
+        <p class="planet-regelt">Berührt: Wandel, Tiefe, Krisen, das, was unter der Oberfläche wirkt. · Skorpion</p>
+      </div>
+    </div>
+
+    <div class="planet">
+      <div class="planet-head"><div class="planet-name">JUPITER</div><div class="planet-sub">November – Dezember · Wachstum & Weite</div><div class="planet-img"><img src="images/saturn-iris.jpg" alt=""></div></div>
+      <div>
+        <p class="planet-scene">„Du bleibst in dem, was du schon kennst. Dabei will ein Teil von dir längst wissen, was hinter dem nächsten Horizont liegt."</p>
+        <div class="level"><span class="level-tag">Im Verborgenen</span><p>Du hältst dich manchmal kleiner, als dir guttut, aus Vorsicht, aus Gewohnheit, weil das Bekannte sich sicherer anfühlt als das große Ganze.</p></div>
+        <div class="level"><span class="level-tag">Wenn es sich zeigt</span><p>Dann kommt ein Moment, eine Einladung, eine Begegnung, eine Tür, die sich wie von selbst öffnet, und du merkst, wie viel größer dein Leben sein darf.</p></div>
+        <div class="level"><span class="level-tag">In liebevoller Übung</span><p>Du übst, dem Vertrauen mehr Raum zu geben als der Kontrolle. Nicht, weil du alles planst, sondern weil du lernst, dich tragen zu lassen.</p></div>
+        <div class="planet-nutzen"><strong>So lebst du das</strong>Du erkennst, wonach du dich wirklich sehnst, und lässt dir zufallen, was für dich bestimmt ist, Schritt für Schritt, nicht mit einem Mal.</div>
+        <p class="planet-regelt">Berührt: Sinn, Wachstum, Entdecken, das große Bild. · Schütze · <em>mit Zeremonie</em></p>
+      </div>
+    </div>
+
+    <div class="planet">
+      <div class="planet-head"><div class="planet-name">SATURN</div><div class="planet-sub">Januar · Stabilität & Grenzen</div><div class="planet-img"><img src="images/jupiter-spiral.jpg" alt=""></div></div>
+      <div>
+        <p class="planet-scene">„Du weißt oft, was jetzt dran wäre. Manchmal fehlt dir nur der Mut, wirklich dazu zu stehen."</p>
+        <div class="level"><span class="level-tag">Im Verborgenen</span><p>Du trägst manches allein, ohne es zu zeigen, aus Angst, als schwach zu gelten, wenn du um Hilfe bittest oder Grenzen ziehst.</p></div>
+        <div class="level"><span class="level-tag">Wenn es sich zeigt</span><p>Irgendwann wird es zu viel. Eine Erschöpfung, eine Enttäuschung, ein Punkt, an dem klar wird: So geht es nicht mehr weiter.</p></div>
+        <div class="level"><span class="level-tag">In liebevoller Übung</span><p>Du übst, dir selbst treu zu bleiben, auch wenn es unbequem ist. Nicht hart mit dir, sondern klar. Integrität wird zur Ruhe, nicht zur Last.</p></div>
+        <div class="planet-nutzen"><strong>So lebst du das</strong>Du triffst deine Entscheidungen zunehmend aus Integrität statt aus Angst, und baust dir Stück für Stück ein Leben, das wirklich trägt.</div>
+        <p class="planet-regelt">Berührt: Struktur, Verantwortung, Reife, Integrität. · Steinbock</p>
+      </div>
+    </div>
+
+    <div class="planet">
+      <div class="planet-head"><div class="planet-name">URANUS</div><div class="planet-sub">Februar · der Ruf zur Freiheit</div><div class="planet-img"><img src="images/uranus-eye.jpg" alt=""></div></div>
+      <div>
+        <p class="planet-scene">„Du passt dich noch an, wo du eigentlich längst aus der Reihe tanzen willst."</p>
+        <div class="level"><span class="level-tag">Im Verborgenen</span><p>Du machst dich klein, damit du dazugehörst, und ahnst doch, dass ein Teil von dir nicht ins Bild passt, das andere von dir haben.</p></div>
+        <div class="level"><span class="level-tag">Wenn es sich zeigt</span><p>Dann kommt ein Bruch, eine plötzliche Klarheit, ein Nein, das einfach da ist. Du merkst, wie anders du wirklich bist, ohne es dir ausgesucht zu haben.</p></div>
+        <div class="level"><span class="level-tag">In liebevoller Übung</span><p>Du übst, zu dem zu stehen, was dich einzigartig macht, auch wenn es aneckt. Nicht trotzig, sondern mit wachsender Selbstverständlichkeit.</p></div>
+        <div class="planet-nutzen"><strong>So lebst du das</strong>Du stehst zunehmend zu deiner Andersartigkeit, statt sie zu verstecken, und ziehst genau dadurch die Menschen an, die wirklich zu dir passen.</div>
+        <p class="planet-regelt">Berührt: Freiheit, Individualität, Erwachen, dein eigener Weg. · Wassermann</p>
+      </div>
+    </div>
+
+    <div class="planet">
+      <div class="planet-head"><div class="planet-name">NEPTUN</div><div class="planet-sub">März · Grenzenlosigkeit & Verschmelzung</div><div class="planet-img"><img src="images/neptun-mandala.jpg" alt=""></div></div>
+      <div>
+        <p class="planet-scene">„Du willst alles verstehen, festhalten, erklären können. Manches lässt sich nur fühlen."</p>
+        <div class="level"><span class="level-tag">Im Verborgenen</span><p>Du hältst Abstand, wo du dich eigentlich fallen lassen könntest, aus Angst, dich zu verlieren, wenn du wirklich loslässt.</p></div>
+        <div class="level"><span class="level-tag">Wenn es sich zeigt</span><p>Dann gibt es Momente, in denen Kontrolle einfach nicht mehr trägt. Ein Gefühl, eine Verbindung, ein Traum, größer als das, was sich erklären lässt.</p></div>
+        <div class="level"><span class="level-tag">In liebevoller Übung</span><p>Du übst, dich diesem Fließen anzuvertrauen, immer wieder neu. Nicht als Kontrollverlust, sondern als eine andere Art, zu vertrauen.</p></div>
+        <div class="planet-nutzen"><strong>So lebst du das</strong>Du vertraust zunehmend dem, was du nicht beweisen kannst, und fühlst dich verbunden, ohne dich dabei zu verlieren.</div>
+        <p class="planet-regelt">Berührt: Vertrauen, Empathie, Verschmelzung, Intuition. · Fische · <em>mit Zeremonie</em></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ABLAUF ===== -->
+<section class="bg-sand" id="ablauf">
+  <div class="wrap">
+    <div style="text-align:center;margin-bottom:20px">
+      <p class="eyebrow">So läuft Evolution II</p>
+      <h2>Ein Weg. Oktober bis März, mit Einkehr im Winter.</h2>
+    </div>
+
+    <div class="calendar">
+      <div class="cal-card"><div class="month">Oktober</div><div class="planet"><div class="pname">PLUTO</div><div class="ptheme">14. &amp; 28.10.</div></div></div>
+      <div class="cal-card"><div class="month">November</div><div class="planet"><div class="pname">JUPITER</div><div class="ptheme">18.11.</div></div></div>
+      <div class="cal-card"><div class="month">Dezember</div><div class="planet"><div class="pname">JUPITER</div><div class="ptheme">9.12.</div></div></div>
+      <div class="cal-card"><div class="month">Januar</div><div class="planet"><div class="pname">SATURN</div><div class="ptheme">13. &amp; 27.1.</div></div></div>
+      <div class="cal-card"><div class="month">Februar</div><div class="planet"><div class="pname">URANUS</div><div class="ptheme">10. &amp; 24.2.</div></div></div>
+      <div class="cal-card"><div class="month">März</div><div class="planet"><div class="pname">NEPTUN</div><div class="ptheme">10. &amp; 24.3.</div></div></div>
+    </div>
+    <p style="text-align:center;margin:24px auto 0;font-size:var(--fs-small);opacity:.65;max-width:52ch">Nach dem 9.12. wird es ruhig: keine Calls über Weihnachten und Neujahr, bis es am 13.1. mit SATURN weitergeht.</p>
+
+    <ul class="flow" style="margin-top:52px">
+      <li><strong>Du startest im Oktober.</strong>Bei PLUTO steigst du ein, gemeinsam mit allen anderen. Ihr geht diesen Weg als Gruppe.</li>
+      <li><strong>Zwei Calls pro Planet.</strong>Ein Call für den Input, einer für die Integration, dazu Arbeits-PDFs. Meist im Abstand von zwei Wochen, via Zoom.</li>
+      <li><strong>Winterruhe zur Integration.</strong>Bei JUPITER liegt ein Call im November, der zweite erst am 9. Dezember, bewusst mit mehr Abstand. Danach kehrt Stille ein: keine Calls über Weihnachten und Neujahr, Zeit zum Sacken lassen. Im Januar geht es mit SATURN frisch weiter, passend zum Jahreswechsel.</li>
+      <li><strong>Zeremonien bei JUPITER und NEPTUN.</strong>Die Momente, in denen es ums Fühlen statt ums Verstehen geht, zeichnen wir bewusst nicht auf.</li>
+      <li><strong>Am Ende hast du den ganzen Weg.</strong>Von der Tiefe bei PLUTO bis zur Verschmelzung bei NEPTUN. Alle fünf Kräfte, einmal ganz durchlebt.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ===== FÜR WEN ===== -->
+<section class="bg-tint">
+  <div class="wrap">
+    <div style="text-align:center;margin-bottom:20px">
+      <p class="eyebrow">Für wen ist das?</p>
+      <h2>Passt EVOLUTION II zu dir?</h2>
+    </div>
+    <div class="fit-grid">
+      <div class="fit-card">
+        <h3>EVOLUTION II ist für dich, wenn …</h3>
+        <ul class="fit-yes">
+          <li>du dich schon mit dir selbst beschäftigt hast (und wahrscheinlich echt viel ;))</li>
+          <li>du Astrologie kennst</li>
+          <li>du merkst, dass Verstehen allein nicht reicht</li>
+          <li>dir viele Konzepte zu abgehoben sind, und du klare Erdung möchtest</li>
+          <li>du die bunten Einzelteile und losen Enden in ein direkt anwendbares großes Bild setzen willst</li>
+        </ul>
+      </div>
+      <div class="fit-card">
+        <h3>EVOLUTION II ist nicht für dich, wenn …</h3>
+        <ul class="fit-no">
+          <li>du keine Verantwortung für dich übernehmen willst</li>
+          <li>du nur Wissen konsumieren willst</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PREIS ===== -->
+<section class="bg-white" id="preis">
+  <div class="wrap" style="text-align:center">
+    <p class="eyebrow">Dein Zugang</p>
+    <h2 style="margin-bottom:36px">Gemeinsam unterwegs, Schritt für Schritt.</h2>
+    <div class="price-card">
+      <p style="display:inline-block;background:var(--tint);color:var(--turq-deep);font-weight:700;font-size:var(--fs-tag);letter-spacing:.1em;text-transform:uppercase;padding:7px 18px;border-radius:20px;margin-bottom:20px">Nur 6 Plätze</p>
+      <div class="price-tag">2.400 €</div>
+      <p style="opacity:.75;margin:0 auto">einmalig, für den ganzen Weg</p>
+      <p class="price-rates">oder in Raten: 6 × 405 €</p>
+      <ul>
+        <li>Zeitraum: 6 Monate, Oktober bis März</li>
+        <li>2 Calls pro Monat via Zoom (Input + Integration), insgesamt 10 Calls</li>
+        <li>Zeremonien bei JUPITER und NEPTUN</li>
+        <li>Kleine Gruppe, persönliche Atmosphäre</li>
+        <li>Begleitende Telegram-Gruppe für Austausch & Verbindung</li>
+        <li>Zusätzliche Impulse & Inhalte zwischen den Calls</li>
+        <li>Inklusive Übersichten (PDFs) & Audios</li>
+      </ul>
+      <p style="margin:22px auto 0;padding:14px 18px;background:var(--tint);border-radius:12px;font-size:var(--fs-small);max-width:440px">+ Bei Anmeldung bis 3.10. ist eine 1:1 Session (45 Min.) mit mir für dich inklusive.</p>
+      <div style="margin-top:34px"><a href="https://tfft.io/kmCEf0y" class="btn" target="_blank" rel="noopener">EVOLUTION II – zur Anmeldung</a></div>
+    </div>
+    <p class="price-after">Für eine wirklich persönliche Atmosphäre in der Gruppe. Start im Oktober, der Weg läuft bis März.</p>
+  </div>
+</section>
+
+<!-- ===== ÜBER MICH ===== -->
+<section class="bg-white about" id="ueber">
+  <div class="wrap">
+    <div class="about-grid">
+      <div class="portrait"></div>
+      <div>
+        <p class="eyebrow">Über mich</p>
+        <h2>Hi, ich bin Pia.</h2>
+        <p>Astrologin, Beraterin und die Stimme hinter Astro mit Herz. Angefangen hat alles 2020 mit meinem eigenen Geburtshoroskop. Diese eine Deutung hat so viel in mir sortiert, dass ich seitdem nicht mehr mit der Astrologie aufhören konnte ;)</p>
+        <p>Ich habe Psychologische Astrologie an der DAV-zertifizierten Astropraxis Hamburg studiert und bin Fachmitglied im Schweizer Astrologenbund. Vor allem geht es mir darum, die Sprache des Kosmos auf die Erde zu übersetzen, leicht und lebendig, nicht als weiteres Konzept zum Grübeln.</p>
+        <p>In EVOLUTION fließt zusammen, was ich in den letzten Jahren gesammelt habe: meine Ausbildungen, Fortbildungen und Vorträge, meine eigene Erfahrung, mein ganz persönliches Verständnis von Astrologie.</p>
+        <p><strong style="color:var(--turq-deep)">Und dafür gibt es EVOLUTION II.</strong> Für den nächsten Schritt, in die Tiefe, in die Weite, und in ein tieferes Verständnis des Lebens.</p>
+        <p style="font-style:italic">Meine Art der Astrologie ist geerdet (Aszendent Stier), empathisch, feinfühlig, ein bisschen magisch und voller Intuition (Sonne in Fische), humorvoll und verbindet gerne große Zusammenhänge miteinander (Merkur im Wassermann). Genau das bekommst du bei mir: geerdete Klarheit mit Herzenswärme, und Klarheit ist das, was mir am häufigsten zurückgemeldet wird.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== STIMMEN ===== -->
+<section class="bg-cream">
+  <div class="wrap">
+    <div style="text-align:center;margin-bottom:36px">
+      <div class="round-accent" style="width:110px;height:110px;margin-bottom:22px"><img src="images/pluto-eye.jpg" alt=""></div>
+      <p class="eyebrow">Teilnehmerstimmen bisheriger Programme</p>
+      <h2>Was andere erlebt haben</h2>
+    </div>
+    <div class="quotes">
+      <div class="quote"><p>„Deine ruhige Art, die Inhalte verständlich rüber zu bringen und jederzeit persönliche Fragen ausführlich zu beantworten, gefällt mir sehr. Vielen, vielen Dank für deine super Arbeit!"</p></div>
+      <div class="quote"><p>„Du schaffst es, komplexe Themen ganz klar und geerdet herunterzubrechen, mein Stier-AC liebt das! Durch deine Erklärungen fühle ich mich viel mehr zu Hause in der Astrologie und bin immer wieder fasziniert, was ich über mich entdecke."</p></div>
+      <div class="quote"><p>„Ich bin auf Pia durch ihren Podcast aufmerksam geworden, der für mich im mittlerweile überfüllten Astro-Universum vor allem durch Qualität und super interessante Themen besticht. Pia verfügt über eine enorme Kompetenz und ein sehr fundiertes, tiefgründiges Wissen."</p></div>
+      <div class="quote"><p>„Deine klare, verständliche Aufbereitung der Inhalte und deine Begeisterung für die Astrologie, die in deinen Seminaren immer mitschwingt, hilft mir besonders, die Themen zu verstehen und anzuwenden. Danke dafür."</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section class="bg-white faq" id="faq">
+  <div class="wrap narrow">
+    <p class="eyebrow">Bevor du fragst</p>
+    <h2 style="margin-bottom:30px">Häufige Fragen</h2>
+    <details open>
+      <summary>Kann ich auch teilnehmen, wenn ich nicht bei EVOLUTION I dabei war?</summary>
+      <p>Ja. Es funktioniert in beiden Richtungen, dein Chart ist rund ;). In EVOLUTION II erkundest du die großen Lebensthemen, in EVOLUTION I die Basis.</p>
+    </details>
+    <details>
+      <summary>Was, wenn ich nicht im Zoom dabei sein kann?</summary>
+      <p>Die Aufzeichnung und alle Materialien stehen dir dauerhaft zur Verfügung. Wenn es mal nicht klappt, kannst du in deinem Tempo nachschauen. Nur bei den Zeremonien bei JUPITER und NEPTUN gibt es keine Aufzeichnung, weil sich das Erleben nicht einfangen lässt.</p>
+    </details>
+    <details>
+      <summary>Ich kenne mein Chart schon ziemlich gut. Was bringt mir EVOLUTION II zusätzlich?</summary>
+      <p>Genau dann ist es relevant. EVOLUTION setzt nicht beim Wissen an, sondern bei der Umsetzung. Du arbeitest nicht daran, noch mehr zu verstehen, sondern daran, das, was du längst weißt, wirklich zu greifen und zu verkörpern. Geerdete Astrologie :)</p>
+    </details>
+    <details>
+      <summary>Brauche ich Vorwissen?</summary>
+      <p>Grundkenntnisse in Astrologie sind sinnvoll. Du musst keine komplette Ausbildung absolviert haben, aber die Grundbegriffe, Planeten und Tierkreiszeichen, solltest du kennen. EVOLUTION II richtet sich an Menschen, die bereits ein Grundverständnis mitbringen und tiefer gehen wollen. Vor allem brauchst du Neugier und Offenheit, für Astrologie und für dich selbst.</p>
+    </details>
+    <details>
+      <summary>Was ist hier anders als bei anderen Programmen?</summary>
+      <p>Der Unterschied liegt in der Struktur und Kombination aller Puzzleteile. Du arbeitest nicht nur mit Erkenntnis, sondern mit einem klaren System: die Ebenen der Planeten, wie bewusst du sie gerade lebst, und die konkrete Anwendung in deinem Alltag, damit sich wirklich etwas verändert und nicht nur noch mehr Verständnis im Kopf entsteht. Da liegt der Anfang, aber dann geht es weiter.</p>
+    </details>
+    <details>
+      <summary>Was ist das Ziel von EVOLUTION II?</summary>
+      <p>Puzzleteile verbinden, ein großes Bild erstellen, und ein Gefühl für dich und dein Sein bekommen, für das, was größer ist als du. Nicht, dich noch besser zu analysieren (das kannst du schon ;)). Sondern dich so zu verbinden, dass du dich anders erlebst: mehr Klarheit, mehr bewusste Entscheidungen, mehr Gefühl für das, was dich trägt.</p>
+    </details>
+    <details>
+      <summary>Wie lange habe ich Zugriff?</summary>
+      <p>Unbegrenzt. Du kannst alle Aufzeichnungen jederzeit wieder anschauen, dazu bekommst du Übersichten als PDF.</p>
+    </details>
+    <details>
+      <summary>Ist das ein klassischer Astro-Kurs?</summary>
+      <p>Nein. Astrologie ist die Grundlage, aber es geht nicht darum, noch mehr Inhalte zu lernen. Im Fokus steht, wie sich die transpersonalen Kräfte konkret in deinem Alltag zeigen und wie du beginnst, sie bewusst zu leben.</p>
+    </details>
+  </div>
+</section>
+
+<!-- ===== FINAL CTA ===== -->
+<section class="bg-cosmic final" style="text-align:center">
+  <div class="wrap">
+    <div class="round-accent" style="width:130px;height:130px;margin-bottom:26px"><img src="images/final-glitter.jpg" alt=""></div>
+    <h2>Bereit für das,<br>was größer ist als du?</h2>
+    <a href="https://tfft.io/kmCEf0y" class="btn" target="_blank" rel="noopener">EVOLUTION II – ich bin dabei</a>
+    <span class="btn-note" style="opacity:.85">Geerdete Astrologie.</span>
+  </div>
+</section>
+
+<footer>
+  <div class="logo">ASTRO MIT HERZ</div>
+  <small>by Pia Tietz · Dich entdecken. Das Universum entdecken.</small>
+  <div class="footer-legal">
+    <a href="https://www.astro-mit-herz.de/impressum">Impressum</a>
+    <a href="https://www.astro-mit-herz.de/datenschutzerklarung-3">Datenschutz</a>
+    <a href="https://www.astro-mit-herz.de/teilnahmebedingungen">Teilnahmebedingungen</a>
+  </div>
+</footer>
+
+</body>
+</html>
