@@ -185,10 +185,10 @@
     .about-grid{grid-template-columns:1fr;gap:28px}
     .quotes{grid-template-columns:1fr}
     .planet{grid-template-columns:1fr;gap:16px}
-    .planet-head{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
-    .planet-head>div{min-width:0}
-    .planet-name,.planet-sub{min-width:0;overflow-wrap:break-word}
-    .planet-img{width:74px;height:74px;margin-top:0}
+    .planet-head{display:flex;align-items:center;gap:14px;flex-wrap:nowrap}
+    .planet-text{flex:1 1 auto;min-width:0}
+    .planet-name,.planet-sub{overflow-wrap:break-word}
+    .planet-img{width:74px;height:74px;margin-top:0;flex:0 0 74px}
     .portrait{width:100%;max-width:340px;margin:0 auto}
     .calendar{grid-template-columns:1fr 1fr}
     .nav{height:auto;padding:12px 24px;gap:12px}
@@ -338,7 +338,7 @@
     </div>
 
     <div class="planet">
-      <div class="planet-head"><div class="planet-name">PLUTO</div><div class="planet-sub">Oktober · der Wandel, der zum Leben gehört</div><div class="planet-img"><img src="images/pluto-cave.jpg" alt=""></div></div>
+      <div class="planet-head"><div class="planet-text"><div class="planet-name">PLUTO</div><div class="planet-sub">Oktober · der Wandel, der zum Leben gehört</div></div><div class="planet-img"><img src="images/pluto-cave.jpg" alt=""></div></div>
       <div>
         <p class="planet-scene">„Etwas in deinem Leben ist eigentlich schon vorbei. Nur du hältst es noch fest."</p>
         <div class="level"><span class="level-tag">Im Verborgenen</span><p>Die Schattenthemen bleiben lieber im Dunkeln, dort, wo es zu roh, zu unbequem wird.</p></div>
@@ -350,7 +350,7 @@
     </div>
 
     <div class="planet">
-      <div class="planet-head"><div class="planet-name">JUPITER</div><div class="planet-sub">November – Dezember · Wachstum & Weite</div><div class="planet-img"><img src="images/saturn-iris.jpg" alt=""></div></div>
+      <div class="planet-head"><div class="planet-text"><div class="planet-name">JUPITER</div><div class="planet-sub">November – Dezember · Wachstum & Weite</div></div><div class="planet-img"><img src="images/saturn-iris.jpg" alt=""></div></div>
       <div>
         <p class="planet-scene">„Du bleibst in dem, was du schon kennst. Dabei will ein Teil von dir längst wissen, was hinter dem nächsten Horizont liegt."</p>
         <div class="level"><span class="level-tag">Im Verborgenen</span><p>Vieles bleibt kleiner, als es sein könnte, weil das Bekannte sich sicherer anfühlt als das große Ganze.</p></div>
@@ -362,7 +362,7 @@
     </div>
 
     <div class="planet">
-      <div class="planet-head"><div class="planet-name">SATURN</div><div class="planet-sub">Januar · Stabilität & Grenzen</div><div class="planet-img"><img src="images/jupiter-spiral.jpg" alt=""></div></div>
+      <div class="planet-head"><div class="planet-text"><div class="planet-name">SATURN</div><div class="planet-sub">Januar · Stabilität & Grenzen</div></div><div class="planet-img"><img src="images/jupiter-spiral.jpg" alt=""></div></div>
       <div>
         <p class="planet-scene">„Du weißt oft, was jetzt dran wäre. Manchmal fehlt dir nur der Mut, wirklich dazu zu stehen."</p>
         <div class="level"><span class="level-tag">Im Verborgenen</span><p>Manches wird allein getragen, aus der Angst heraus, als schwach zu gelten, wenn Hilfe gebraucht wird.</p></div>
@@ -374,7 +374,7 @@
     </div>
 
     <div class="planet">
-      <div class="planet-head"><div class="planet-name">URANUS</div><div class="planet-sub">Februar · der Ruf zur Freiheit</div><div class="planet-img"><img src="images/uranus-eye.jpg" alt=""></div></div>
+      <div class="planet-head"><div class="planet-text"><div class="planet-name">URANUS</div><div class="planet-sub">Februar · der Ruf zur Freiheit</div></div><div class="planet-img"><img src="images/uranus-eye.jpg" alt=""></div></div>
       <div>
         <p class="planet-scene">„Du passt dich noch an, wo du eigentlich längst aus der Reihe tanzen willst."</p>
         <div class="level"><span class="level-tag">Im Verborgenen</span><p>Ein Kleinmachen, um dazuzugehören, mit der leisen Ahnung, dass ein Teil nicht ins Bild passt.</p></div>
@@ -386,7 +386,7 @@
     </div>
 
     <div class="planet">
-      <div class="planet-head"><div class="planet-name">NEPTUN</div><div class="planet-sub">März · Grenzenlosigkeit & Verschmelzung</div><div class="planet-img"><img src="images/neptun-mandala.jpg" alt=""></div></div>
+      <div class="planet-head"><div class="planet-text"><div class="planet-name">NEPTUN</div><div class="planet-sub">März · Grenzenlosigkeit & Verschmelzung</div></div><div class="planet-img"><img src="images/neptun-mandala.jpg" alt=""></div></div>
       <div>
         <p class="planet-scene">„Du willst alles verstehen, festhalten, erklären können. Manches lässt sich nur fühlen."</p>
         <div class="level"><span class="level-tag">Im Verborgenen</span><p>Abstand, aus der Angst heraus, sich zu verlieren, wenn wirklich losgelassen wird.</p></div>
