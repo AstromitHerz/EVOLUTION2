@@ -31,8 +31,8 @@
     --fs-h1:clamp(2.2rem,5.6vw,3.8rem);
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
-  body{font-family:"Glacial Indifference",-apple-system,Segoe UI,sans-serif;color:var(--navy);background:var(--white);font-size:20px;line-height:1.68;-webkit-font-smoothing:antialiased}
+  html{scroll-behavior:smooth;overflow-x:hidden}
+  body{font-family:"Glacial Indifference",-apple-system,Segoe UI,sans-serif;color:var(--navy);background:var(--white);font-size:20px;line-height:1.68;-webkit-font-smoothing:antialiased;overflow-x:hidden}
   .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
   .narrow{max-width:720px}
 
@@ -186,6 +186,8 @@
     .quotes{grid-template-columns:1fr}
     .planet{grid-template-columns:1fr;gap:16px}
     .planet-head{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+    .planet-head>div{min-width:0}
+    .planet-name,.planet-sub{min-width:0;overflow-wrap:break-word}
     .planet-img{width:74px;height:74px;margin-top:0}
     .portrait{width:100%;max-width:340px;margin:0 auto}
     .calendar{grid-template-columns:1fr 1fr}
